@@ -1,4 +1,4 @@
-#include "TXLib.h"
+#include <SFML/Graphics.hpp>
 #include <cmath>
 #include <iostream>
 
@@ -14,7 +14,6 @@ struct Ball {
 		red = 144,
 		green = 0,
 		blue = 0;
-
 };
 
 bool Is_Collide_of_Balls(const Ball& ball1, const Ball& ball2) {
@@ -37,7 +36,6 @@ bool Is_Collide_of_Balls(const Ball& ball1, const Ball& ball2) {
 			return true;
 			
 		}
-
 	}
 
 	return false;
@@ -108,27 +106,22 @@ void Collide_of_All_Balls(Ball* balls) {
 	}
 }
 
-void DrawBall(const Ball& ball) {
+void DrawBall(const Ball& ball,sf::RenderWindow& window ) {
 
-	for (double k = ball.r; k > 0; --k) {
+    sf::CircleShape shape(ball.r);
+    shape.setPosition(ball.x-ball.r,ball.y-ball.r);
+    shape.setFillColor(sf::Color(ball.red,ball.green,ball.blue));
+    window.draw(shape);
 
-		auto rgb = RGB(ball.red * sqrt((1 - pow(k / ball.r, 2))), ball.green * sqrt((1 - pow(k / ball.r, 2))), ball.blue * sqrt((1 - pow(k / ball.r, 2))));
-
-		txSetFillColor(rgb);
-		txSetColor(rgb);
-		txCircle(ball.x, ball.y, k);
-
-	}
 }
-void DrawAllBalls(Ball* balls) {
+void DrawAllBalls(Ball* balls,sf::RenderWindow& window ) {
 	for (int i = 0; i < 50; ++i) {
 
-		DrawBall(balls[i]);
+		DrawBall(balls[i],window);
 	}
 
 }
 void MoveBall(Ball& ball) {
-
 
 	if (ball.y > 600 - ball.r && ball.Vy > 0 || ball.y < ball.r && ball.Vy < 0) {
 
@@ -155,8 +148,8 @@ int main() {
 
 	setlocale(LC_ALL, "Russian");
 
-	txCreateWindow(800, 600);
-
+	sf::RenderWindow window(sf::VideoMode(800, 600), "byb!!!!!!!!!!!!!!");
+	window.setFramerateLimit(80);
 	Ball* balls = new Ball[50];
 
 	for (int i = 0; i < 50; ++i) {
@@ -168,20 +161,24 @@ int main() {
 		balls[i].Vy = rand()%20;
 	}
 
-	for (;;) {
+	while (window.isOpen()){
 
-		txClear();
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+		    if (event.type == sf::Event::Closed)
+			window.close();
+		}
 
-		txBegin();
+		window.clear();
 
-		DrawAllBalls(balls);
+		DrawAllBalls(balls,window);
 		MoveAllBalls(balls);
 		Collide_of_All_Balls(balls);
 
-		txSetFillColor(RGB(0, 0, 0));
+		window.display();
 
-		txEnd();
 	}
-	delete[] balls;
-	return 0;
+    delete[] balls;
+    return 0;
 }
