@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+class Ballsss;
+
 void Collision_of_Balls(const double x1, const double y1, const double x2, const double y2, double& Vx1, double& Vy1, double& Vx2, double& Vy2) {
 
 	double k = (y2 - y1) / (x2 - x1);
