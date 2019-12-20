@@ -152,6 +152,25 @@ class List{
 
         }
 
+        void insertByIndex( int index ){
+
+            if( index == 0 ){
+                pushFront(0);
+            }
+            else if( index == len()-1 ){
+                pushBack(0);
+            }
+            else{
+                Node* old_object = getObjectByIndex(index);
+                Node* before_old_object = getObjectByIndex(index-1);
+
+                Node* new_object = new Node;
+
+                new_object -> next = before_old_object -> next;
+                before_old_object -> next = new_object;
+            }
+        }
+
         int& operator[](int index){
                         
             Node* current = getObjectByIndex(index);
