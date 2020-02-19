@@ -29,58 +29,17 @@ void FindNeighbours(std::vector< std::vector<char> >& field_of_islands , int str
     if(field_of_islands[str_position][col_position] == '1'){
 
         field_of_islands[str_position][col_position] = '0';
-
-        if( (str_position > 0 and col_position > 0 ) and (str_position < str - 1 and col_position < col - 1 )  ){
-            
-            FindNeighbours(field_of_islands ,str_position - 1 ,col_position);
-            FindNeighbours(field_of_islands ,str_position + 1 ,col_position);
-            FindNeighbours(field_of_islands ,str_position ,col_position - 1 );
-            FindNeighbours(field_of_islands ,str_position ,col_position + 1);
-
-        }else if( str_position == 0 and col_position == 0 ){
-
-            FindNeighbours(field_of_islands ,str_position + 1 ,col_position);
-            FindNeighbours(field_of_islands ,str_position  ,col_position + 1 );
-
-        }else if( str_position == 0 and col_position == col - 1 ){
-
-            FindNeighbours(field_of_islands , str_position + 1 ,col_position );
-            FindNeighbours(field_of_islands , str_position , col_position - 1 );
-
-        }else if( str_position == str - 1 and col_position == 0 ){
-
-            FindNeighbours(field_of_islands ,str_position - 1 ,col_position );
-            FindNeighbours(field_of_islands ,str_position  ,col_position + 1 );
-
-        }else if( str_position == str - 1 and col_position == col - 1 ){
-
-            FindNeighbours(field_of_islands ,str_position - 1 ,col_position );
-            FindNeighbours(field_of_islands ,str_position  ,col_position - 1 );
-
-        }else if( str_position == 0 ){
-
-            FindNeighbours(field_of_islands ,str_position + 1 ,col_position );
-            FindNeighbours(field_of_islands ,str_position  ,col_position - 1 );
-            FindNeighbours(field_of_islands ,str_position ,col_position + 1 );   
-
-        }else if( str_position == str - 1 ){
-            
-            FindNeighbours(field_of_islands ,str_position  ,col_position - 1 );
-            FindNeighbours(field_of_islands ,str_position ,col_position + 1 );
-            FindNeighbours(field_of_islands ,str_position - 1 ,col_position  );
-
-        }else if( col_position == 0 ){
-            
-            FindNeighbours(field_of_islands ,str_position - 1 ,col_position );
-            FindNeighbours(field_of_islands ,str_position + 1 ,col_position );
-            FindNeighbours(field_of_islands ,str_position  ,col_position + 1 );
-
-        }else if( col_position == col - 1 ){
-            
-            FindNeighbours(field_of_islands ,str_position - 1 ,col_position );
-            FindNeighbours(field_of_islands ,str_position + 1 ,col_position );
-            FindNeighbours(field_of_islands ,str_position  ,col_position - 1 );
-
+        if(str_position - 1 >= 0){
+            FindNeighbours(field_of_islands, str_position - 1 , col_position);
+        }
+        if(str_position + 1 < str){
+            FindNeighbours(field_of_islands, str_position + 1 , col_position);
+        }
+        if(col_position - 1 >= 0){
+            FindNeighbours(field_of_islands, str_position , col_position - 1);
+        }
+        if(str_position + 1 <= col){
+            FindNeighbours(field_of_islands, str_position , col_position + 1);
         }
     } 
 }
