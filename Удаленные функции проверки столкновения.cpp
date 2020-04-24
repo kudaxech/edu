@@ -168,3 +168,80 @@ std::vector<float> findCollisionByCheckPoints(std::vector < std::vector <float> 
     return{0,0};
 
 }
+
+bool areCrossing(Vector3f first_point_hitbox,Vector3f  second_point_hitbox,Vector3f old_point_hitbox ,Vector3f new_point_hitbox , std::vector<float>& angle  )
+{   
+    Vector3f
+
+    v11 = first_point_hitbox,
+    v12 = second_point_hitbox,
+
+    v21 = old_point_hitbox,
+    v22 = new_point_hitbox;
+
+    Vector3f cut1 = (v12 - v11);
+    Vector3f cut2 = (v22 - v21);
+
+    Vector3f 
+
+    prod1 = cross(cut1 , v21 - v11 ),
+    prod2 = cross(cut1 , v22 - v11 );
+
+    if( prod1[2]*prod2[2] > 0  or prod1[2] == 0 or prod2[2] == 0)//здесь  удалил проверку на равенство 0 составляющей по оси z я считаю это столкновением
+    {
+        return false;
+    }
+
+    prod1 = cross(cut2 , (v11-v21));
+    prod2 = cross(cut2 , (v12-v21));
+
+    if( prod1[2]*prod2[2] > 0  or prod1[2] == 0 or prod2[2] == 0)//здесь  удалил проверку на равенство 0 составляющей по оси z я считаю это столкновением
+    {
+        return false;
+    }  
+
+    // float 
+
+    // x_coor_point_new = new_point_hitbox[0],
+    // y_coor_point_new = new_point_hitbox[1],
+
+    // x_coor_point_old = old_point_hitbox[0],
+    // y_coor_point_old = old_point_hitbox[1];
+
+
+    // Vector3f crossing;
+
+    // crossing[0] = v11[0] + cut1[0]*fabs(prod1[2])/fabs(prod2[2]-prod1[2]);
+    // crossing[1] = v11[1] + cut1[1]*fabs(prod1[2])/fabs(prod2[2]-prod1[2]);
+
+   
+
+    float sin = 0;
+    float cos = 0;
+
+    
+    
+    if (v11[0] == v12[0])
+    {
+        if (v11[1] < v12[1])
+        {
+            sin = 1;
+            cos = 0;
+        }
+        else 
+        {
+            sin = -1;
+            cos = 0;
+        }
+    }
+    else 
+    {
+        float k = (v12[1] - v11[1]) / (v12[0] - v11[0]);
+        sin = k / (sqrt(pow(k, 2) + 1));
+        cos = 1 / (sqrt(pow(k, 2) + 1));
+    }
+  
+    angle = {cos,-sin};
+
+    return true;
+}
