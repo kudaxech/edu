@@ -52,7 +52,7 @@ int main()
         double  k = 1,
                 q = 1;
 
-        std::vector<double> accuracy;
+        std::vector<std::vector<double> > accuracy;
     
         std::vector < double> U;
 
@@ -167,7 +167,7 @@ int main()
 
             h /= 2;
 
-            accuracy.push_back(max);
+            accuracy.push_back({max,H});
 
             if( max < 0.0001 )
             {   
@@ -177,19 +177,19 @@ int main()
 
         }
 
-        std::cout << " Аналитическое решение задачи  " << std::endl;
+        std::cout << " Аналитическое решение задачи  "<<" число узлов в сетке: "<< 1/H + 1 << std::endl<<std::endl;
         for(int l = 0 ; l <= 10 ; ++l)
         {
-            std::cout << F(step*l,k,q) <<" ";
+            std::cout << F(step*l,k,q) <<"(точка сетки:"<< 0.1*l <<" ) /////  ";
         }
         std::cout << std::endl<< std::endl;
 
         
 
-        std::cout << "Численное решение задачи  " << std::endl;
+        std::cout << "Численное решение задачи  " <<" число узлов в сетке: "<< 1/H + 1 << std::endl<<std::endl;
         for(int l = 0 ; l <= 10 ; ++l)
         {
-            std::cout << U[l] <<" ";
+            std::cout << U[l] <<"(точка сетки:"<< 0.1*l <<" ) ///// ";
         }
         std::cout << std::endl<< std::endl;
 
@@ -198,7 +198,7 @@ int main()
         std::cout << " Убывание погрешности " << std::endl;
         for(auto item: accuracy)
         {
-            std::cout << item << std::endl;
+            std::cout << " Погрешность "<< item[0] << " число узлов: "<< 1/item[1] + 1 << std::endl;
         }
     }
     ///////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@ int main()
     ///////////////////////////////////////////////////////////////
     { 
         
-        double h = 0.1;
+        double h = H;
         
         std::vector <double> x(1/h + 1);
         x[0] = 0;
@@ -300,6 +300,16 @@ int main()
             short_way.push_back(u[1/h*0.1*l]);
         }
 
+
+        std::cout <<"///////////////////////////////////////"<<std::endl<<"///////////////////////////////////////// "<<std::endl<<std::endl;
+
+    
+        std::cout << "Численное решение задачи с переменными коэффициентами  " <<" число узлов в сетке: "<< 1/H + 1 << std::endl<<std::endl;
+        for(int l = 0 ; l <= 10 ; ++l)
+        {
+            std::cout << short_way[l] <<"(точка сетки:"<< 0.1*l <<" ) ///// ";
+        }
+        std::cout << std::endl<< std::endl;
         
     }
 
